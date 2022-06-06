@@ -1,14 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Login from './Login';
+import Dashboard from './Dashboard';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(
+	document.getElementById("root")
+);
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+	<BrowserRouter basename="/octo-blog">
+		<Routes>
+			<Route path="/" element={<App />} />
+			<Route path="login" element={<Login />} />
+			<Route path="dashboard" element={<Dashboard />} />
+		</Routes>
+	</BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
