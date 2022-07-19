@@ -1,36 +1,48 @@
+import { Octokit } from "octokit";
 import { Component } from "react";
 import { Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
 
 var Remarkable = require('react-remarkable');
 
 class PostPreview extends Component {
-	render() {
-		const { title, createdDate, modifiedDate, content } = this.props;
-
-		var updatedDate = createdDate;
-		if (modifiedDate !== null && modifiedDate !== undefined) {
-			updatedDate = modifiedDate;
+	constructor(props) {
+		super(props);
+		this.state = {
+			octokit: new Octokit({ auth: process.env.GH_TOKEN }),
+			isLoading: true,
+			content: null,
 		}
-		updatedDate = updatedDate.toLocaleString("en-CA", {
-			day: "numeric",
-			month: "short",
-			year: "numeric",
-			hour: "numeric",
-			minute: "2-digit"
+	}
+
+	componentDidMount() {
+		this.fetchPostContent();
+	}
+
+	fetchPostContent = async () => {
+		const content = await this.state.octokit.request(`GET ${this.props.url}`);
+
+		this.setState({
+			isLoading: false,
+			content: content,
 		});
+	}
+
+	render() {
+		const { isLoading, content } = this.state;
+
+		if (isLoading) {
+			// TODO: Create custom loader
+			return <p>Loading...</p>
+		}
+
+		console.log(content);
 
 		return (
-			<div className="post-preview my-3">
+			<div className="post-preview">
 				<Card className="post-preview-card shadow" style={{ width: "18rem" }}>
 					<Card.Body>
-						<Card.Title>{title}</Card.Title>
-
-						<Card.Subtitle className="mb-2 text-muted">Updated: {updatedDate}</Card.Subtitle>
-						<Card.Text>
-							<Remarkable source={content} />
-						</Card.Text>
-						<Button as={Link} variant="primary" to="/edit/sample-post">Edit</Button>
+						<Card.Text as={Remarkable} source={content.data} />
+						<Button variant="primary">View</Button>
 					</Card.Body>
 				</Card>
 			</div>

@@ -4,13 +4,17 @@
   "homepage": "https://casey-oneill.github.io/octo-blog",
   "private": true,
   "dependencies": {
+    "@primer/octicons-react": "^17.3.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.27.2",
     "bootstrap": "^5.1.3",
+    "octokit": "^2.0.4",
     "react": "^18.1.0",
     "react-bootstrap": "^2.4.0",
     "react-dom": "^18.1.0",
+    "react-icons": "^4.4.0",
     "react-remarkable": "^1.1.3",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
@@ -43,6 +47,7 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
+    "gh-pages": "^4.0.0",
+    "raw.macro": "^0.4.2"
   }
 }

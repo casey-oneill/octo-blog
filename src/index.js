@@ -3,10 +3,9 @@ import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Login from './Login';
-import Dashboard from './Dashboard';
+import Layout from './pages/Layout';
+import HomePage from './pages/HomePage';
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root")
@@ -15,9 +14,9 @@ const root = ReactDOM.createRoot(
 root.render(
 	<BrowserRouter basename="/octo-blog">
 		<Routes>
-			<Route path="/" element={<App />} />
-			<Route path="login" element={<Login />} />
-			<Route path="dashboard" element={<Dashboard />} />
+			<Route path="/" element={<Layout />}>
+				<Route path="/" element={<HomePage />} />
+			</Route>
 		</Routes>
 	</BrowserRouter>
 );
