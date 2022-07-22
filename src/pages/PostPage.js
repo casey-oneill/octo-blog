@@ -44,14 +44,7 @@ class PostPage extends Component {
 
 		return (
 			<Container className="post-page my-5">
-				<Card>
-					<Card.Title className="p-4 mb-0">
-						{content.data.split('\n')[0].replace("# ", "")}
-					</Card.Title>
-					<Card.Body>
-						<Card.Text as={Remarkable} source={content.data.split('\n')[2]} />
-					</Card.Body>
-				</Card>
+				<Post content={content} />
 			</Container>
 		);
 	}
