@@ -7,7 +7,7 @@ class Layout extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="d-flex flex-column min-vh-100">
 				<Header />
 				<Outlet />
 				<Footer />

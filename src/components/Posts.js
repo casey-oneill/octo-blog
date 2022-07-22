@@ -36,7 +36,7 @@ class Posts extends Component {
 		var postPreviews = [];
 		posts.forEach((post) => {
 			postPreviews.push(
-				<Col xs={3} className="m-3">
+				<Col md={12} lg={3} className="m-3">
 					<PostPreview url={post.download_url} />
 				</Col>
 			);
@@ -55,11 +55,9 @@ class Posts extends Component {
 
 		return (
 			<div className="posts">
-				<Container className="my-5">
-					<Row className="justify-content-start">
-						{this.renderPosts(posts)}
-					</Row>
-				</Container>
+				<Row className="justify-content-around">
+					{this.renderPosts(posts)}
+				</Row>
 			</div>
 		)
 	}

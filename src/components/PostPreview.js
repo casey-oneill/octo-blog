@@ -20,7 +20,6 @@ class PostPreview extends Component {
 
 	fetchPostContent = async () => {
 		const content = await this.state.octokit.request(`GET ${this.props.url}`);
-
 		this.setState({
 			isLoading: false,
 			content: content,
@@ -35,15 +34,31 @@ class PostPreview extends Component {
 			return <p>Loading...</p>
 		}
 
-		console.log(content);
+		const textPreview = content.data.split('\n')[2];
+		var cardBody = (
+			<Card.Body>
+				<Card.Text as={Remarkable} source={textPreview} />
+			</Card.Body>
+		);
+
+		if (textPreview.length > 175) {
+			cardBody = (
+				<Card.Body>
+					<Card.Text as={Remarkable} source={textPreview.substring(0, 175).trim() + "..."} />
+				</Card.Body>
+			);
+		}
 
 		return (
 			<div className="post-preview">
-				<Card className="post-preview-card shadow" style={{ width: "18rem" }}>
-					<Card.Body>
-						<Card.Text as={Remarkable} source={content.data} />
+				<Card className="post-preview-card shadow">
+					<Card.Title className="p-4 mb-0">
+						{content.data.split('\n')[0].replace("# ", "")}
+					</Card.Title>
+					{cardBody}
+					<Card.Footer>
 						<Button variant="primary">View</Button>
-					</Card.Body>
+					</Card.Footer>
 				</Card>
 			</div>
 		);
