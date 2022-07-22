@@ -2,10 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useParams } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import Layout from './pages/Layout';
 import HomePage from './pages/HomePage';
+import PostPage from './pages/PostPage';
+
+const PostPageWrapper = (props) => {
+	const params = useParams();
+	return (
+		<PostPage {...{ ...props, match: { params } }} />
+	);
+};
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root")
@@ -16,6 +24,9 @@ root.render(
 		<Routes>
 			<Route path="/" element={<Layout />}>
 				<Route path="/" element={<HomePage />} />
+				<Route path="posts">
+					<Route path=":path" element={<PostPageWrapper />} />
+				</Route>
 			</Route>
 		</Routes>
 	</BrowserRouter>

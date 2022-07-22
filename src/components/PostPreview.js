@@ -1,6 +1,7 @@
 import { Octokit } from "octokit";
 import { Component } from "react";
 import { Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 var Remarkable = require('react-remarkable');
 
@@ -24,6 +25,10 @@ class PostPreview extends Component {
 			isLoading: false,
 			content: content,
 		});
+	}
+
+	formatPostPath(path) {
+		return path.replace("blog/", "").replace(".md", "");
 	}
 
 	render() {
@@ -57,7 +62,7 @@ class PostPreview extends Component {
 					</Card.Title>
 					{cardBody}
 					<Card.Footer>
-						<Button variant="primary">View</Button>
+						<Button as={Link} variant="primary" to={`/posts/${this.formatPostPath(this.props.path)}`}>View</Button>
 					</Card.Footer>
 				</Card>
 			</div>

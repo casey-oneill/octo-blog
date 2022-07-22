@@ -2,7 +2,6 @@ import { Octokit } from "octokit";
 import { Component } from "react";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
-import { Container } from "react-bootstrap";
 import PostPreview from "./PostPreview";
 
 class Posts extends Component {
@@ -37,7 +36,7 @@ class Posts extends Component {
 		posts.forEach((post) => {
 			postPreviews.push(
 				<Col md={12} lg={3} className="m-3">
-					<PostPreview url={post.download_url} />
+					<PostPreview url={post.download_url} path={post.path} />
 				</Col>
 			);
 		});
