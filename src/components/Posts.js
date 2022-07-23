@@ -1,7 +1,7 @@
-import { Octokit } from "octokit";
 import { Component } from "react";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
+import { buildOctokit } from "../util/util";
 import PostPreview from "./PostPreview";
 
 class Posts extends Component {
@@ -9,7 +9,6 @@ class Posts extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			octokit: new Octokit({ auth: process.env.GH_TOKEN }),
 			isLoading: true,
 			posts: [],
 		}
@@ -20,7 +19,8 @@ class Posts extends Component {
 	}
 
 	fetchPosts = async () => {
-		const content = await this.state.octokit.request("GET /repos/{owner}/{repo}/contents/blog/", {
+		const octokit = await buildOctokit();
+		const content = await octokit.request("GET /repos/{owner}/{repo}/contents/blog/", {
 			owner: process.env.REACT_APP_GH_OWNER,
 			repo: process.env.REACT_APP_GH_REPO,
 		});
@@ -58,7 +58,7 @@ class Posts extends Component {
 					{this.renderPosts(posts)}
 				</Row>
 			</div>
-		)
+		);
 	}
 }
 

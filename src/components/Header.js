@@ -14,6 +14,9 @@ class Header extends Component {
 						<Navbar.Toggle aria-controls="navbar-nav" />
 						<Navbar.Collapse id="navbar-nav" className="justify-content-end">
 							<Nav>
+								<Nav.Link as={Link} to="/about">About</Nav.Link>
+							</Nav>
+							<Nav>
 								<Nav.Link href={process.env.REACT_APP_GH_REPO_URL}><MarkGithubIcon size={16} /></Nav.Link>
 							</Nav>
 						</Navbar.Collapse>

@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import Layout from './pages/Layout';
 import HomePage from './pages/HomePage';
 import PostPage from './pages/PostPage';
+import AboutPage from './pages/AboutPage';
 
 const PostPageWrapper = (props) => {
 	const params = useParams();
@@ -27,6 +28,7 @@ root.render(
 				<Route path="posts">
 					<Route path=":path" element={<PostPageWrapper />} />
 				</Route>
+				<Route path="about" element={<AboutPage />} />
 			</Route>
 		</Routes>
 	</BrowserRouter>

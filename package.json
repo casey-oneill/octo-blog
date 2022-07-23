@@ -4,6 +4,8 @@
   "homepage": "https://casey-oneill.github.io/octo-blog",
   "private": true,
   "dependencies": {
+    "@octokit/auth-token": "^3.0.0",
+    "@octokit/core": "^4.0.4",
     "@primer/octicons-react": "^17.3.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
