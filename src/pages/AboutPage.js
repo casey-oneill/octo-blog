@@ -1,6 +1,10 @@
 import { Component } from "react";
-import { Container } from "react-bootstrap";
+import { Image } from "react-bootstrap";
+import { Row } from "react-bootstrap";
+import { Col } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
 import { buildOctokit } from "../util/util";
+import { LocationIcon, MarkGithubIcon } from "@primer/octicons-react";
 
 class AboutPage extends Component {
 
@@ -41,9 +45,25 @@ class AboutPage extends Component {
 
 		return (
 			<Container className="about-page my-5">
-				<h1 className="text-center">About</h1>
-				<p>{user.name}</p>
-				<p>{user.bio}</p>
+				<h1 className="text-center mb-5">About</h1>
+
+				<Row>
+					<Col xs={12} sm={4} className>
+						<Image src={user.avatar_url} className="rounded-circle mx-auto d-block" width={150} height={150} />
+					</Col>
+					<Col xs={12} sm={8}>
+						<Card>
+							<Card.Body>
+								<Card.Title>{user.name}</Card.Title>
+								<Card.Text>{user.bio}</Card.Text>
+								{user.location === null ? null : <p><LocationIcon size={16} /> {user.location}</p>}
+							</Card.Body>
+							<Card.Footer>
+								<a href={user.html_url}><MarkGithubIcon size={16} /></a>
+							</Card.Footer>
+						</Card>
+					</Col>
+				</Row>
 			</Container>
 		);
 	}

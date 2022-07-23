@@ -82,7 +82,7 @@ class PostPage extends Component {
 
 		return (
 			<Container className="post-page my-5">
-				<Card className="bg-light mb-3">
+				<Card className="bg-light mb-5">
 					<Card.Body>
 						<p className="my-0">{author}</p>
 						<p className="my-0 text-muted">{this.formattedDate()}</p>
