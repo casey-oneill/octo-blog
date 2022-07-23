@@ -1,5 +1,6 @@
-.post-preview-card .card-body {
-	min-height: 12rem;
-	max-height: 12rem;
-	overflow-y: hidden;
+.post-preview p {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
 }

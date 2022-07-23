@@ -62,30 +62,17 @@ class PostPreview extends Component {
 			return <p>Loading...</p>
 		}
 
-		const textPreview = content.split('\n')[2];
-		var cardBody = (
-			<Card.Body>
-				<Card.Text as={Remarkable} source={textPreview} />
-			</Card.Body>
-		);
-
-		if (textPreview.length > 175) {
-			cardBody = (
-				<Card.Body>
-					<Card.Text as={Remarkable} source={textPreview.substring(0, 175).trim() + "..."} />
-				</Card.Body>
-			);
-		}
+		const [title, x, preview] = content.split("\n").slice(0, 3);
 
 		return (
 			<div className="post-preview">
-				<Card className="post-preview-card shadow">
-					<Card.Title className="p-4 mb-0">
-						{content.split('\n')[0].replace("# ", "")}
-					</Card.Title>
-					{cardBody}
+				<Card className="shadow">
+					<Card.Body>
+						<Card.Title>{title.replace("# ", "")}</Card.Title>
+						<Card.Text className="post-preview-text" as={Remarkable} source={preview} />
+					</Card.Body>
 					<Card.Footer>
-						<p className="mt-0 text-muted">{this.formattedDate()}</p>
+						<p className="text-muted">{this.formattedDate()}</p>
 						<Button as={Link} variant="primary" to={`/posts/${this.formattedPostPath(this.props.path)}`}>View</Button>
 					</Card.Footer>
 				</Card>

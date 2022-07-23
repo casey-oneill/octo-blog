@@ -35,7 +35,7 @@ class Posts extends Component {
 		var postPreviews = [];
 		posts.forEach((post) => {
 			postPreviews.push(
-				<Col md={12} lg={3} className="m-3">
+				<Col xs={12} className="m-3">
 					<PostPreview url={post.download_url} path={post.path} />
 				</Col>
 			);

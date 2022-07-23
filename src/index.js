@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+// import "bootswatch/dist/litera/bootstrap.min.css"; // TODO: Get theme from .env file
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import { BrowserRouter, Route, Routes, useParams } from 'react-router-dom';
