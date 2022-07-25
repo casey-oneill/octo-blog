@@ -1,5 +1,6 @@
 import { Component } from "react";
-import { Container } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
+import Categories from "../components/Categories";
 import Posts from "../components/Posts";
 
 class HomePage extends Component {
@@ -7,8 +8,15 @@ class HomePage extends Component {
 	render() {
 		return (
 			<Container className="home py-5">
-				<h1 className="text-center mb-3">Blog Posts</h1>
-				<Posts />
+				<h1 className="text-center mb-5">Blog Posts</h1>
+				<Row>
+					<Col xs={12} lg={3}>
+						<Categories />
+					</Col>
+					<Col xs={12} lg={9}>
+						<Posts />
+					</Col>
+				</Row>
 			</Container>
 		);
 	}

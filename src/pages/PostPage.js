@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { Component } from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Breadcrumb, BreadcrumbItem, Card, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Post from "../components/Post";
 import { buildOctokit } from "../util/util";
 
@@ -12,7 +13,10 @@ class PostPage extends Component {
 		super(props);
 		this.state = {
 			isLoading: true,
-			author: null,
+			path: this.props.match.params.path,
+			name: this.props.match.params.path.split("-").join(" "),
+			dirname: this.props.match.params.category,
+			category: null,
 			createdDate: null,
 			modifiedDate: null,
 			content: null,
@@ -20,15 +24,22 @@ class PostPage extends Component {
 	}
 
 	componentDidMount() {
-		this.fetchPostContent();
+		if (this.state.dirname !== undefined && this.state.dirname !== null) {
+			this.fetchPostContent(this.state.dirname + "/" + this.props.match.params.path + ".md");
+			this.setState({
+				category: this.state.dirname.split("-").join(" "),
+			});
+		} else {
+			this.fetchPostContent(this.props.match.params.path + ".md");
+		}
 	}
 
-	fetchPostContent = async () => {
+	fetchPostContent = async (path) => {
 		const octokit = await buildOctokit();
 		const metadata = await octokit.request("GET /repos/{owner}/{repo}/contents/blog/{path}", {
 			owner: process.env.REACT_APP_GH_OWNER,
 			repo: process.env.REACT_APP_GH_REPO,
-			path: this.props.match.params.path + ".md",
+			path: path,
 		});
 
 		const content = atob(metadata.data.content); // FIXME: Deprecated method
@@ -41,11 +52,10 @@ class PostPage extends Component {
 		const commits = await octokit.request("GET /repos/{owner}/{repo}/commits{?path}", {
 			owner: process.env.REACT_APP_GH_OWNER,
 			repo: process.env.REACT_APP_GH_REPO,
-			path: "blog/" + this.props.match.params.path + ".md",
+			path: "blog/" + path,
 		});
 
 		this.setState({
-			author: commits.data.at(0).commit.author.name,
 			createdDate: commits.data.at(-1).commit.committer.date,
 		});
 
@@ -54,6 +64,21 @@ class PostPage extends Component {
 				modifiedDate: commits.data.at(0).commit.committer.date,
 			});
 		}
+	}
+
+	breadcrumbItems = () => {
+		const { path, name, dirname, category } = this.state;
+		var items = [];
+		items.push(<BreadcrumbItem linkAs={Link} linkProps={{ to: "/" }}>Home</BreadcrumbItem>);
+
+		if (dirname !== undefined && dirname !== null) {
+			items.push(<BreadcrumbItem className="text-capitalize" linkAs={Link} linkProps={{ to: `/categories/${dirname}` }}>{category}</BreadcrumbItem>);
+			items.push(<BreadcrumbItem className="text-capitalize" linkAs={Link} linkProps={{ to: `/posts/${dirname}/${path}` }}>{name}</BreadcrumbItem>);
+		} else {
+			items.push(<BreadcrumbItem className="text-capitalize" linkAs={Link} linkProps={{ to: `/posts/${path}` }}>{name}</BreadcrumbItem>);
+		}
+
+		return items;
 	}
 
 	formattedDate = () => {
@@ -66,14 +91,12 @@ class PostPage extends Component {
 	}
 
 	readingTime = () => {
-		const { content } = this.state;
-		const stats = readingTime(content);
-
+		const stats = readingTime(this.state.content);
 		return stats.text;
 	}
 
 	render() {
-		const { isLoading, author, content } = this.state;
+		const { isLoading, content } = this.state;
 
 		if (isLoading) {
 			// TODO: Create custom loader
@@ -82,9 +105,11 @@ class PostPage extends Component {
 
 		return (
 			<Container className="post-page my-5">
+				<Breadcrumb>
+					{this.breadcrumbItems()}
+				</Breadcrumb>
 				<Card className="bg-light mb-5">
 					<Card.Body>
-						<p className="my-0">{author}</p>
 						<p className="my-0 text-muted">{this.formattedDate()}</p>
 						<p className="my-0 text-muted">{this.readingTime()}</p>
 					</Card.Body>

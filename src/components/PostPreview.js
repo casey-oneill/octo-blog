@@ -67,12 +67,12 @@ class PostPreview extends Component {
 		return (
 			<div className="post-preview">
 				<Card className="shadow">
+					<Card.Header>{this.formattedDate()}</Card.Header>
 					<Card.Body>
 						<Card.Title>{title.replace("# ", "")}</Card.Title>
 						<Card.Text className="post-preview-text" as={Remarkable} source={preview} />
 					</Card.Body>
 					<Card.Footer>
-						<p className="text-muted">{this.formattedDate()}</p>
 						<Button as={Link} variant="primary" to={`/posts/${this.formattedPostPath(this.props.path)}`}>View</Button>
 					</Card.Footer>
 				</Card>
