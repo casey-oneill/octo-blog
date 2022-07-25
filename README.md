@@ -17,6 +17,7 @@ OctoBlog is a blog template implemented using [React](https://reactjs.org/), des
 
 ## Features
 - **Simple**: Deploy once, blog forever.
+- **Complete**: Comes with functionality expected of a standard personal blog. Organize your posts into categories. Tell the world about yourself with the _About_ section.
 - **Responsive**: Your blog will look good on all devices, no matter the screen size.
 - **Customizable**: Easily customize your blog's look with [Bootswatch](https://bootswatch.com/) themes or dig in and modify the project's React components to your taste.
 - **Extendable**: Something missing? Modify this free and open-source [React](https://reactjs.org/) project to implement the features you need.
@@ -29,5 +30,5 @@ You write your blog posts in [Markdown](https://www.markdownguide.org/getting-st
 ## Technical Details
 OctoBlog is implemented using [React](https://reactjs.org/), [Bootstrap](https://getbootstrap.com/), and [octokit.js](https://github.com/octokit/octokit.js). It's also free and open-source, making it a great jumping-off point for developers looking for a free, customizable blog template.
 
-## License
+## LICENSE
 [MIT](license)
