@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { buildOctokit } from "../util/util";
+import Loader from "./Loader";
 
 var Remarkable = require('react-remarkable');
 
@@ -43,8 +44,7 @@ function PostPreview(props) {
 	const formattedDate = format(new Date(date), "MMMM dd, yyyy");
 
 	if (loading) {
-		// TODO: Create custom loader
-		return <p>Loading...</p>
+		return <Loader />
 	}
 
 	// FIXME: Find a better way to do this...

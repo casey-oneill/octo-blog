@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { buildOctokit } from "../util/util";
 import { Link } from "react-router-dom";
+import Loader from "./Loader";
 
 function Categories() {
 	const [loading, setLoading] = useState(true);
@@ -51,8 +52,7 @@ function Categories() {
 	});
 
 	if (loading) {
-		// TODO: Create custom loader
-		return <p>Loading...</p>
+		return <Loader />
 	}
 
 	return (

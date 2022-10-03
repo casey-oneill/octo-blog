@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import Post from "../components/Post";
 import { buildOctokit } from "../util/util";
+import Loader from "../components/Loader";
 
 const readingTime = require("reading-time");
 
@@ -74,8 +75,7 @@ function PostPage(props) {
 	const readingTimeStats = stats.text;
 
 	if (loading) {
-		// TODO: Create custom loader
-		return <p>Loading...</p>
+		return <Loader />
 	}
 
 	return (

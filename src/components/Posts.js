@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
 import { buildOctokit } from "../util/util";
+import Loader from "./Loader";
 import PostPreview from "./PostPreview";
 
 function Posts(props) {
@@ -66,8 +67,7 @@ function Posts(props) {
 	});
 
 	if (loading) {
-		// TODO: Create custom loader
-		return <p>Loading...</p>
+		return <Loader />
 	}
 
 	return (

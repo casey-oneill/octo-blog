@@ -3,6 +3,7 @@ import { MarkGithubIcon } from "@primer/octicons-react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { buildOctokit } from "../util/util";
+import Loader from "./Loader";
 
 function Header() {
 	const [loading, setLoading] = useState(true);
@@ -48,8 +49,7 @@ function Header() {
 	});
 
 	if (loading) {
-		// TODO: Create custom loader
-		return <p>Loading...</p>
+		return <Loader />
 	}
 
 	return (
