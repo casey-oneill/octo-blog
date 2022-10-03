@@ -1,101 +1,80 @@
-import { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
 import { buildOctokit } from "../util/util";
 import PostPreview from "./PostPreview";
 
-class Posts extends Component {
+function Posts(props) {
+	const [loading, setLoading] = useState(true);
+	const [posts, setPosts] = useState([]);
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			isLoading: true,
-			categories: null,
-			posts: null,
-		}
-	}
-
-	componentDidMount() {
-		this.fetchPosts();
-	}
-
-	fetchPosts = async () => {
-		if (this.props.path !== undefined && this.props.path !== null) {
-			const octokit = await buildOctokit();
-			const content = await octokit.request("GET /repos/{owner}/{repo}/contents/blog/{path}", {
-				owner: process.env.REACT_APP_GH_OWNER,
-				repo: process.env.REACT_APP_GH_REPO,
-				path: this.props.path,
-			});
-
-			this.setState({
-				isLoading: false,
-				posts: content.data,
-			});
-		}
-		else {
-			const octokit = await buildOctokit();
-			const content = await octokit.request("GET /repos/{owner}/{repo}/contents/blog/", {
-				owner: process.env.REACT_APP_GH_OWNER,
-				repo: process.env.REACT_APP_GH_REPO,
-			});
-
-			var posts = [];
-			var categories = [];
-
-			content.data.forEach((c) => {
-				if (c.download_url === null) {
-					categories.push(c);
-				} else {
-					posts.push(c);
-				}
-			});
-
-			for (var i = 0; i < categories.length; i++) {
-				const content = await octokit.request("GET /repos/{owner}/{repo}/contents/{path}", {
+	useEffect(() => {
+		const fetchPosts = async () => {
+			if (props.path !== undefined && props.path !== null) {
+				const octokit = await buildOctokit();
+				const content = await octokit.request("GET /repos/{owner}/{repo}/contents/blog/{path}", {
 					owner: process.env.REACT_APP_GH_OWNER,
 					repo: process.env.REACT_APP_GH_REPO,
-					path: categories[i].path,
+					path: props.path,
 				});
 
-				console.log(content);
-				posts = posts.concat(content.data);
-			}
+				setPosts(content.data);
+				setLoading(false);
+			} else {
+				const octokit = await buildOctokit();
+				const content = await octokit.request("GET /repos/{owner}/{repo}/contents/blog/", {
+					owner: process.env.REACT_APP_GH_OWNER,
+					repo: process.env.REACT_APP_GH_REPO,
+				});
 
-			this.setState({
-				isLoading: false,
-				posts: posts,
-			});
-		}
-	}
+				var posts = [];
+				var categories = [];
 
-	renderPosts(posts) {
-		var postPreviews = [];
-		posts.forEach((post, i) => {
-			postPreviews.push(
-				<Col xs={12} className={postPreviews.length === 0 ? "mb-3" : "my-3"} key={i}>
-					<PostPreview path={post.path} />
-				</Col>
-			);
-		});
+				content.data.forEach((c) => {
+					if (c.download_url === null) {
+						categories.push(c);
+					} else {
+						posts.push(c);
+					}
+				});
 
-		return postPreviews;
-	}
+				for (var i = 0; i < categories.length; i++) {
+					const content = await octokit.request("GET /repos/{owner}/{repo}/contents/{path}", {
+						owner: process.env.REACT_APP_GH_OWNER,
+						repo: process.env.REACT_APP_GH_REPO,
+						path: categories[i].path,
+					});
 
-	render() {
-		const { isLoading, posts } = this.state;
+					posts = posts.concat(content.data);
+				}
 
-		if (isLoading) {
-			// TODO: Create custom loader
-			return <p>Loading...</p>
-		}
+				setPosts(posts);
+				setLoading(false);
+			};
+		};
 
-		return (
-			<Row className="posts">
-				{this.renderPosts(posts)}
-			</Row>
+		fetchPosts();
+	});
+
+	var postPreviews = [];
+	posts.forEach((post, i) => {
+		postPreviews.push(
+			<Col xs={12} className={postPreviews.length === 0 ? "mb-3" : "my-3"} key={i}>
+				<PostPreview path={post.path} />
+			</Col>
 		);
+	});
+
+	if (loading) {
+		// TODO: Create custom loader
+		return <p>Loading...</p>
 	}
-}
+
+	return (
+		<Row className="posts">
+			{postPreviews}
+		</Row>
+	);
+};
 
 export default Posts;
