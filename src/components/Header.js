@@ -44,7 +44,7 @@ function Header() {
 
 	var categoryItems = [];
 	categories.forEach((category, i) => {
-		categoryItems.push(<NavDropdown.Item as={Link} to={`/categories/${category.dirname}`} className="text-capitalize">{category.name}</NavDropdown.Item>)
+		categoryItems.push(<NavDropdown.Item key={i} as={Link} to={`/categories/${category.dirname}`} className="text-capitalize">{category.name}</NavDropdown.Item>)
 	});
 
 	if (loading) {
