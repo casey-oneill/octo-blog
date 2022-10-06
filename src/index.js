@@ -9,7 +9,9 @@ import Layout from './pages/Layout';
 import HomePage from './pages/HomePage';
 import PostPage from './pages/PostPage';
 import AboutPage from './pages/AboutPage';
-import CategoryPage from './pages/CategoryPage';
+import CategoryPage from './features/categories/CategoryPage';
+import { Provider } from 'react-redux';
+import store from './app/store';
 
 const CategoryPageWrapper = (props) => {
 	const params = useParams();
@@ -28,25 +30,27 @@ const PostPageWrapper = (props) => {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-	<BrowserRouter basename="/octo-blog">
-		<Routes>
-			<Route path="/" element={<Layout />}>
-				<Route path="/" element={<HomePage />} />
-				<Route path="categories">
-					<Route path=":path" element={<CategoryPageWrapper />} />
-				</Route>
-				<Route path="posts">
-					<Route path=":path" element={<PostPageWrapper />} />
-				</Route>
-				<Route path="posts">
-					<Route path=":category">
+	<Provider store={store}>
+		<BrowserRouter basename="/octo-blog">
+			<Routes>
+				<Route path="/" element={<Layout />}>
+					<Route path="/" element={<HomePage />} />
+					<Route path="categories">
+						<Route path=":path" element={<CategoryPageWrapper />} />
+					</Route>
+					<Route path="posts">
 						<Route path=":path" element={<PostPageWrapper />} />
 					</Route>
+					<Route path="posts">
+						<Route path=":category">
+							<Route path=":path" element={<PostPageWrapper />} />
+						</Route>
+					</Route>
+					<Route path="about" element={<AboutPage />} />
 				</Route>
-				<Route path="about" element={<AboutPage />} />
-			</Route>
-		</Routes>
-	</BrowserRouter>
+			</Routes>
+		</BrowserRouter>
+	</Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

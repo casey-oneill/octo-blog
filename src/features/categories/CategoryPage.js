@@ -1,6 +1,6 @@
 import React from "react";
 import { Breadcrumb, BreadcrumbItem, Container } from "react-bootstrap";
-import Posts from "../components/Posts";
+import Posts from "../../components/Posts";
 import { Link } from "react-router-dom";
 
 const CategoryPage = (props) => {
