@@ -3,7 +3,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import Categories from "../components/Categories";
 import Posts from "../components/Posts";
 
-function HomePage() {
+const HomePage = () => {
 	return (
 		<Container className="home py-5">
 			<h1 className="text-center mb-5">Blog Posts</h1>

@@ -4,7 +4,7 @@ import { buildOctokit } from "../util/util";
 import { Link } from "react-router-dom";
 import Loader from "./Loader";
 
-function Categories() {
+const Categories = () => {
 	const [loading, setLoading] = useState(true);
 	const [categories, setCategories] = useState([]);
 

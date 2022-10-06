@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { buildOctokit } from "../util/util";
 import Loader from "./Loader";
 
-function Header() {
+const Header = () => {
 	const [loading, setLoading] = useState(true);
 	const [categories, setCategories] = useState([]);
 

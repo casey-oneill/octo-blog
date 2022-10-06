@@ -7,7 +7,7 @@ import Loader from "./Loader";
 
 var Remarkable = require('react-remarkable');
 
-function PostPreview(props) {
+const PostPreview = (props) => {
 	const [loading, setLoading] = useState(true);
 	const [date, setDate] = useState(null);
 	const [content, setContent] = useState(null);

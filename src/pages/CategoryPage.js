@@ -3,7 +3,7 @@ import { Breadcrumb, BreadcrumbItem, Container } from "react-bootstrap";
 import Posts from "../components/Posts";
 import { Link } from "react-router-dom";
 
-function CategoryPage(props) {
+const CategoryPage = (props) => {
 	const path = props.match.params.path;
 	const name = props.match.params.path.split("-").join(" ");
 

@@ -8,7 +8,7 @@ import Loader from "../components/Loader";
 
 const readingTime = require("reading-time");
 
-function PostPage(props) {
+const PostPage = (props) => {
 	const path = props.match.params.path;
 	const name = props.match.params.path.split("-").join(" ");
 	const dirname = props.match.params.category;

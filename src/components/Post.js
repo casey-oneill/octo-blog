@@ -3,7 +3,7 @@ import { Card } from "react-bootstrap";
 
 var Remarkable = require('react-remarkable');
 
-function Post() {
+const Post = () => {
 	return (
 		<div className="post">
 			<Card>

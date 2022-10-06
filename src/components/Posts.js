@@ -5,7 +5,7 @@ import { buildOctokit } from "../util/util";
 import Loader from "./Loader";
 import PostPreview from "./PostPreview";
 
-function Posts(props) {
+const Posts = (props) => {
 	const [loading, setLoading] = useState(true);
 	const [posts, setPosts] = useState([]);
 

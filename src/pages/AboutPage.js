@@ -3,7 +3,7 @@ import { Card, Col, Container, Image, Row } from "react-bootstrap";
 import { buildOctokit } from "../util/util";
 import { LocationIcon, MarkGithubIcon } from "@primer/octicons-react";
 
-function AboutPage() {
+const AboutPage = () => {
 	const [loading, setLoading] = useState(true);
 	const [user, setUser] = useState(null);
 
