@@ -1,20 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Loader from "../../components/Loader";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCategories, selectAllCategories } from "./categoriesSlice";
+import { useSelector } from "react-redux";
+import { selectAllCategories } from "./categoriesSlice";
 
 const CategoriesList = () => {
-	const dispatch = useDispatch();
 	const categories = useSelector(selectAllCategories);
 	const categoriesStatus = useSelector((state) => state.categories.status);
-
-	useEffect(() => {
-		if (categoriesStatus === 'idle') {
-			dispatch(fetchCategories());
-		}
-	}, [categoriesStatus, dispatch]);
 
 	var categoryItems = [];
 	categories.forEach((category, i) => {

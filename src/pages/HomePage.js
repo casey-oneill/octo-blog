@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import Categories from "../components/Categories";
-import Posts from "../components/Posts";
+import CategoriesList from "../features/categories/CategoriesList";
+import PostsList from "../features/posts/PostsList";
 
 const HomePage = () => {
 	return (
@@ -9,10 +9,10 @@ const HomePage = () => {
 			<h1 className="text-center mb-5">Blog Posts</h1>
 			<Row>
 				<Col xs={12} lg={3}>
-					<Categories />
+					<CategoriesList />
 				</Col>
 				<Col xs={12} lg={9}>
-					<Posts />
+					<PostsList />
 				</Col>
 			</Row>
 		</Container>

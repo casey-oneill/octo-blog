@@ -1,7 +1,7 @@
 import React from "react";
 import { Breadcrumb, BreadcrumbItem, Container } from "react-bootstrap";
-import Posts from "../../components/Posts";
 import { Link } from "react-router-dom";
+import PostsList from "../posts/PostsList";
 
 const CategoryPage = (props) => {
 	const path = props.match.params.path;
@@ -14,7 +14,7 @@ const CategoryPage = (props) => {
 				<BreadcrumbItem className="text-capitalize" linkAs={Link} linkProps={{ to: `/categories/${path}` }}>{name}</BreadcrumbItem>
 			</Breadcrumb>
 			<h1 className="text-center text-capitalize mb-5">{name}</h1>
-			<Posts path={path} />
+			<PostsList path={path} />
 		</Container>
 	);
 };

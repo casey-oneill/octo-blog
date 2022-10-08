@@ -7,11 +7,11 @@ import { BrowserRouter, Route, Routes, useParams } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import Layout from './pages/Layout';
 import HomePage from './pages/HomePage';
-import PostPage from './pages/PostPage';
-import AboutPage from './pages/AboutPage';
 import CategoryPage from './features/categories/CategoryPage';
 import { Provider } from 'react-redux';
 import store from './app/store';
+import PostPage from './features/posts/PostPage';
+import UserPage from './features/user/UserPage';
 
 const CategoryPageWrapper = (props) => {
 	const params = useParams();
@@ -46,7 +46,7 @@ root.render(
 							<Route path=":path" element={<PostPageWrapper />} />
 						</Route>
 					</Route>
-					<Route path="about" element={<AboutPage />} />
+					<Route path="about" element={<UserPage />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

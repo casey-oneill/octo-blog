@@ -1,32 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Card, Col, Container, Image, Row } from "react-bootstrap";
-import { buildOctokit } from "../util/util";
 import { LocationIcon, MarkGithubIcon } from "@primer/octicons-react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "./userSlice";
+import Loader from "../../components/Loader";
 
-const AboutPage = () => {
-	const [loading, setLoading] = useState(true);
-	const [user, setUser] = useState(null);
+const UserPage = () => {
+	const dispatch = useDispatch();
+	const user = useSelector(state => state.user.user);
+	const userStatus = useSelector(state => state.user.status);
 
 	useEffect(() => {
-		// Fetch user data from GitHub API
-		const fetchUser = async () => {
-			const octokit = await buildOctokit();
-			const user = await octokit.request("GET /user", {});
+		if (userStatus === 'idle') {
+			dispatch(fetchUser());
+		}
+	}, [userStatus, dispatch]);
 
-			setLoading(false);
-			setUser(user.data);
-		};
-
-		fetchUser();
-	});
-
-	if (loading) {
+	if (['idle', 'loading'].includes(userStatus)) {
 		return (
 			<Container className="about-page my-5">
 				<h1 className="text-center">About</h1>
-
-				{/* TODO: Create custom loader */}
-				<p>Loading...</p>
+				<Loader />
 			</Container>
 		);
 	}
@@ -55,4 +49,4 @@ const AboutPage = () => {
 	);
 };
 
-export default AboutPage;
+export default UserPage;
