@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { STATUS } from "../../util/constants";
-import { buildOctokit } from "../../util/util";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { STATUS } from '../../util/constants';
+import { buildOctokit } from '../../util/util';
 
 const initialState = {
 	user: null,
@@ -10,7 +10,7 @@ const initialState = {
 
 export const fetchUser = createAsyncThunk('/user/fetchUser', async () => {
 	const octokit = await buildOctokit();
-	const user = await octokit.request("GET /user", {});
+	const user = await octokit.request('GET /user', {});
 
 	return user.data;
 });
@@ -29,7 +29,7 @@ export const userSlice = createSlice({
 				state.user = action.payload;
 			})
 			.addCase(fetchUser.rejected, (state, action) => {
-				state.status = STATUS.ERROR;
+				state.status = STATUS.FAILED;
 				state.error = action.error.message;
 			});
 	}

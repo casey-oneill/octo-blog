@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { Breadcrumb, BreadcrumbItem, Card, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import Loader from "../../components/Loader";
-import Post from "./Post";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPost, selectPostByName } from "./postsSlice";
-import { buildPostPath, buildRelativeCategoryLink, buildRelativePostLink, parseCreatedDate, parseModifiedDate, parsePostTitle } from "../../util/util";
-import { STATUS } from "../../util/constants";
+import React, { useEffect } from 'react';
+import { Breadcrumb, BreadcrumbItem, Card, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import Loader from '../../components/Loader';
+import Post from './Post';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPost, selectPostByName } from './postsSlice';
+import { buildPostPath, buildRelativeCategoryLink, buildRelativePostLink, parseCreatedDate, parseModifiedDate, parsePostTitle } from '../../util/util';
+import { STATUS } from '../../util/constants';
 
 const PostPage = (props) => {
 	const dispatch = useDispatch();

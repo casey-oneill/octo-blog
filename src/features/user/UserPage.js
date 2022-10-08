@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { Card, Col, Container, Image, Row } from "react-bootstrap";
-import { LocationIcon, MarkGithubIcon } from "@primer/octicons-react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "./userSlice";
-import Loader from "../../components/Loader";
-import { STATUS } from "../../util/constants";
+import React, { useEffect } from 'react';
+import { Card, Col, Container, Image, Row } from 'react-bootstrap';
+import { LocationIcon, MarkGithubIcon } from '@primer/octicons-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from './userSlice';
+import Loader from '../../components/Loader';
+import { STATUS } from '../../util/constants';
 
 const UserPage = () => {
 	const dispatch = useDispatch();

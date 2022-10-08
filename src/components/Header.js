@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { MarkGithubIcon } from "@primer/octicons-react";
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import Loader from "./Loader";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCategories, selectAllCategories } from "../features/categories/categoriesSlice";
-import { STATUS } from "../util/constants";
+import React, { useEffect } from 'react';
+import { MarkGithubIcon } from '@primer/octicons-react';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import Loader from './Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategories, selectAllCategories } from '../features/categories/categoriesSlice';
+import { STATUS } from '../util/constants';
 
 const Header = () => {
 	const dispatch = useDispatch();

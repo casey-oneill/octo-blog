@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { Card, ListGroup } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import Loader from "../../components/Loader";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCategories, selectAllCategories } from "./categoriesSlice";
-import { STATUS } from "../../util/constants";
+import React, { useEffect } from 'react';
+import { Card, ListGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import Loader from '../../components/Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategories, selectAllCategories } from './categoriesSlice';
+import { STATUS } from '../../util/constants';
 
 const CategoriesList = () => {
 	const dispatch = useDispatch();

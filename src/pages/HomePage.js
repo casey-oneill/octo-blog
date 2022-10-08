@@ -1,7 +1,7 @@
-import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import CategoriesList from "../features/categories/CategoriesList";
-import PostsList from "../features/posts/PostsList";
+import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import CategoriesList from '../features/categories/CategoriesList';
+import PostsList from '../features/posts/PostsList';
 
 const HomePage = () => {
 	return (

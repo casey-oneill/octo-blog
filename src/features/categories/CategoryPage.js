@@ -1,11 +1,11 @@
-import React from "react";
-import { Breadcrumb, BreadcrumbItem, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import PostsList from "../posts/PostsList";
+import React from 'react';
+import { Breadcrumb, BreadcrumbItem, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import PostsList from '../posts/PostsList';
 
 const CategoryPage = (props) => {
 	const path = props.match.params.path;
-	const name = props.match.params.path.split("-").join(" ");
+	const name = props.match.params.path.split('-').join(' ');
 
 	return (
 		<Container className="about-page my-5">

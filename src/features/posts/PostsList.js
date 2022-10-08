@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
-import { Row } from "react-bootstrap";
-import { Col } from "react-bootstrap";
-import Loader from "../../components/Loader";
-import PostPreview from "./PostPreview";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCategoryPosts, fetchPosts, selectPostsByCategory } from "./postsSlice";
-import { STATUS } from "../../util/constants";
-import { buildCategoryPath } from "../../util/util";
+import React, { useEffect } from 'react';
+import { Col, Row } from 'react-bootstrap';
+import Loader from '../../components/Loader';
+import PostPreview from './PostPreview';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategoryPosts, fetchPosts, selectPostsByCategory } from './postsSlice';
+import { STATUS } from '../../util/constants';
+import { buildCategoryPath } from '../../util/util';
 
 const PostsList = (props) => {
 	const dispatch = useDispatch();

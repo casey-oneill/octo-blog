@@ -85,9 +85,9 @@ To verify your download, find the `octo-blog` project in your computer's files. 
 
 ### Step 4: Configure template
 
-Configure the OctoBlog template by modifying the project's `.env` file. Using a lightweight code editing program such as [Visual Studio Code](https://code.visualstudio.com/) or [Atom](https://atom.io/) is not required, but recommended, as your computer may struggle to figure out how to open this kind of file. If you do not want to install a code editor, programs like Notepad (Windows) or vi (Unix) can be used.
+Configure the OctoBlog template by copying the project's `.env.template` file and renaming it to `.env`. Using a lightweight code editing program such as [Visual Studio Code](https://code.visualstudio.com/) or [Atom](https://atom.io/) is not required, but recommended, as your computer may struggle to figure out how to open this kind of file. If you do not want to install a code editor, programs like Notepad (Windows) or vi (Unix) can be used.
 
-Update the `.env` file for your blog. When you're done, it should look something like this:
+Configure the `.env` file for your blog. When you're done, it should look something like this:
 
 ```sh
 # GitHub Settings

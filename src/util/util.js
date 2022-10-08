@@ -1,6 +1,6 @@
-import { Octokit } from "octokit";
-import { createTokenAuth } from "@octokit/auth-token";
-import { format } from "date-fns";
+import { Octokit } from 'octokit';
+import { createTokenAuth } from '@octokit/auth-token';
+import { format } from 'date-fns';
 
 let octokit = null;
 export const buildOctokit = async () => {
@@ -47,10 +47,12 @@ export const buildRelativePostLink = (path) => {
 	return '/posts/'.concat(simplePath);
 }
 
+// Given a category path, build and return the API path for that category
 export const buildCategoryPath = (category) => {
 	return category === undefined ? undefined : 'blog/'.concat(category);
 }
 
+// Given a category path and a post name, build and return the API path for that post
 export const buildPostPath = (category, name) => {
 	const filename = name.concat('.md');
 	return category === undefined ? 'blog/'.concat(filename) : 'blog/'.concat(category).concat('/').concat(filename);

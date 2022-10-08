@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { STATUS } from "../../util/constants";
-import { buildOctokit } from "../../util/util";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { STATUS } from '../../util/constants';
+import { buildOctokit } from '../../util/util';
 
 const initialState = {
 	categories: [],
@@ -21,7 +21,7 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
 	};
 
 	const octokit = await buildOctokit();
-	const content = await octokit.request("GET /repos/{owner}/{repo}/contents/blog/", {
+	const content = await octokit.request('GET /repos/{owner}/{repo}/contents/blog/', {
 		owner: process.env.REACT_APP_GH_OWNER,
 		repo: process.env.REACT_APP_GH_REPO,
 	});
@@ -47,11 +47,11 @@ export const categoriesSlice = createSlice({
 				state.status = STATUS.LOADING;
 			})
 			.addCase(fetchCategories.fulfilled, (state, action) => {
-				state.status = 'succeeded';
+				state.status = STATUS.SUCCEEDED;
 				state.categories = action.payload;
 			})
 			.addCase(fetchCategories.rejected, (state, action) => {
-				state.status = 'failed';
+				state.status = STATUS.FAILED;
 				state.error = action.error.message;
 			});
 	}
