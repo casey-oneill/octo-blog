@@ -1,22 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Breadcrumb, BreadcrumbItem, Card, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Loader from "../../components/Loader";
 import Post from "./Post";
-import { useSelector } from "react-redux";
-import { selectPostByName } from "./postsSlice";
-import { buildRelativeCategoryLink, buildRelativePostLink, parseCreatedDate, parseModifiedDate, parsePostTitle } from "../../util/util";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPost, selectPostByName } from "./postsSlice";
+import { buildPostPath, buildRelativeCategoryLink, buildRelativePostLink, parseCreatedDate, parseModifiedDate, parsePostTitle } from "../../util/util";
 import { STATUS } from "../../util/constants";
 
 const PostPage = (props) => {
+	const dispatch = useDispatch();
 	const path = props.match.params.path;
 	const title = parsePostTitle(path);
 	const category = props.match.params.category?.split('-').join(' ');
 
 	const post = useSelector(state => selectPostByName(state, path.concat('.md')));
 	const postsStatus = useSelector(state => state.posts.status);
+	const postPath = buildPostPath(props.match.params.category, path);
 
-	if (postsStatus === STATUS.LOADING) {
+	useEffect(() => {
+		if (postsStatus === STATUS.IDLE) {
+			dispatch(fetchPost(postPath));
+		}
+	}, [postsStatus, postPath, dispatch]);
+
+	if ([STATUS.IDLE, STATUS.LOADING].includes(postsStatus)) {
 		return <Loader />
 	}
 

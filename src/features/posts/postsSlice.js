@@ -4,9 +4,73 @@ import { buildOctokit } from "../../util/util";
 
 const initialState = {
 	posts: [],
+	complete: false,
 	status: STATUS.IDLE,
 	error: null,
 };
+
+const fetchPostContent = async (postPath) => {
+	console.log(postPath)
+	const octokit = await buildOctokit();
+	const metadata = await octokit.request("GET /repos/{owner}/{repo}/contents/{path}", {
+		owner: process.env.REACT_APP_GH_OWNER,
+		repo: process.env.REACT_APP_GH_REPO,
+		path: postPath,
+	});
+
+	const decodedContent = atob(metadata.data.content); // FIXME: deprecated method
+	return decodedContent;
+}
+
+const fetchPostCommits = async (postPath) => {
+	const octokit = await buildOctokit();
+	const commits = await octokit.request("GET /repos/{owner}/{repo}/commits{?path}", {
+		owner: process.env.REACT_APP_GH_OWNER,
+		repo: process.env.REACT_APP_GH_REPO,
+		path: postPath,
+	});
+
+	return commits.data;
+}
+
+export const fetchPost = createAsyncThunk('posts/fetchPost', async (postPath) => {
+	const octokit = await buildOctokit();
+	const content = await octokit.request("GET /repos/{owner}/{repo}/contents/{path}", {
+		owner: process.env.REACT_APP_GH_OWNER,
+		repo: process.env.REACT_APP_GH_REPO,
+		path: postPath,
+	});
+
+	let post = content.data;
+	const postContent = await fetchPostContent(post.path);
+	const postCommits = await fetchPostCommits(post.path);
+	post.content = postContent;
+	post.commits = postCommits;
+
+	return post;
+});
+
+export const fetchCategoryPosts = createAsyncThunk('/posts/fetchCategoryPosts', async (categoryPath) => {
+	const octokit = await buildOctokit();
+	const content = await octokit.request("GET /repos/{owner}/{repo}/contents/{path}", {
+		owner: process.env.REACT_APP_GH_OWNER,
+		repo: process.env.REACT_APP_GH_REPO,
+		path: categoryPath,
+	});
+
+	let posts = content.data;
+	for (let i = 0; i < posts.length; i++) {
+		const path = posts[i].path;
+
+		const content = await fetchPostContent(path);
+		posts[i].content = content;
+
+		const commits = await fetchPostCommits(path);
+		posts[i].commits = commits;
+	}
+
+	return posts;
+});
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
 	// Fetch all posts and categories from /blog
@@ -16,8 +80,8 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
 		repo: process.env.REACT_APP_GH_REPO,
 	});
 
-	var posts = [];
-	var categories = [];
+	let posts = [];
+	let categories = [];
 
 	content.data.forEach((c) => {
 		if (c.download_url === null) {
@@ -42,21 +106,12 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
 	// TODO: Fetch on request, rather than all at once
 	for (var i = 0; i < posts.length; i++) {
 		const path = posts[i].path;
-		// Fetch post content
-		const metadata = await octokit.request("GET /repos/{owner}/{repo}/contents/{path}", {
-			owner: process.env.REACT_APP_GH_OWNER,
-			repo: process.env.REACT_APP_GH_REPO,
-			path: path,
-		});
-		const content = atob(metadata.data.content); // FIXME: Deprecated method
+
+		const content = await fetchPostContent(path);
 		posts[i].content = content;
 
-		const commits = await octokit.request("GET /repos/{owner}/{repo}/commits{?path}", {
-			owner: process.env.REACT_APP_GH_OWNER,
-			repo: process.env.REACT_APP_GH_REPO,
-			path: path,
-		});
-		posts[i].commits = commits.data;
+		const commits = await fetchPostCommits(path);
+		posts[i].commits = commits;
 	}
 
 	return posts;
@@ -73,9 +128,32 @@ export const postsSlice = createSlice({
 			})
 			.addCase(fetchPosts.fulfilled, (state, action) => {
 				state.status = 'succeeded';
-				state.posts = state.posts.concat(action.payload);
+				state.complete = true;
+				state.posts = action.payload;
 			})
 			.addCase(fetchPosts.rejected, (state, action) => {
+				state.status = 'failed';
+				state.error = action.error.message;
+			})
+			.addCase(fetchPost.pending, (state, action) => {
+				state.status = STATUS.LOADING;
+			})
+			.addCase(fetchPost.fulfilled, (state, action) => {
+				state.status = 'succeeded';
+				state.posts = state.posts.concat(action.payload);
+			})
+			.addCase(fetchPost.rejected, (state, action) => {
+				state.status = 'failed';
+				state.error = action.error.message;
+			})
+			.addCase(fetchCategoryPosts.pending, (state, action) => {
+				state.status = STATUS.LOADING;
+			})
+			.addCase(fetchCategoryPosts.fulfilled, (state, action) => {
+				state.status = 'succeeded';
+				state.posts = state.posts.concat(action.payload);
+			})
+			.addCase(fetchCategoryPosts.rejected, (state, action) => {
 				state.status = 'failed';
 				state.error = action.error.message;
 			})

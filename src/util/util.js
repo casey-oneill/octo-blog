@@ -2,9 +2,13 @@ import { Octokit } from "octokit";
 import { createTokenAuth } from "@octokit/auth-token";
 import { format } from "date-fns";
 
+let octokit = null;
 export const buildOctokit = async () => {
-	const { token } = await createTokenAuth(process.env.REACT_APP_GH_TOKEN).call();
-	return new Octokit({ auth: token });
+	if (octokit === null) {
+		const { token } = await createTokenAuth(process.env.REACT_APP_GH_TOKEN).call();
+		octokit = new Octokit({ auth: token });
+	}
+	return octokit;
 };
 
 // Given a post path, parse and return the title of the post
@@ -41,4 +45,13 @@ export const buildRelativeCategoryLink = (path) => {
 export const buildRelativePostLink = (path) => {
 	const simplePath = path.replace('blog/', '').replace('.md', '');
 	return '/posts/'.concat(simplePath);
+}
+
+export const buildCategoryPath = (category) => {
+	return category === undefined ? undefined : 'blog/'.concat(category);
+}
+
+export const buildPostPath = (category, name) => {
+	const filename = name.concat('.md');
+	return category === undefined ? 'blog/'.concat(filename) : 'blog/'.concat(category).concat('/').concat(filename);
 }

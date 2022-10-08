@@ -14,7 +14,7 @@ const CategoryPage = (props) => {
 				<BreadcrumbItem className="text-capitalize" linkAs={Link} linkProps={{ to: `/categories/${path}` }}>{name}</BreadcrumbItem>
 			</Breadcrumb>
 			<h1 className="text-center text-capitalize mb-5">{name}</h1>
-			<PostsList path={path} />
+			<PostsList category={path} />
 		</Container>
 	);
 };

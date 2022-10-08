@@ -1,16 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
 import Loader from "../../components/Loader";
 import PostPreview from "./PostPreview";
-import { useSelector } from "react-redux";
-import { selectPostsByCategory } from "./postsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategoryPosts, fetchPosts, selectPostsByCategory } from "./postsSlice";
 import { STATUS } from "../../util/constants";
+import { buildCategoryPath } from "../../util/util";
 
 const PostsList = (props) => {
-	const { path } = props;
-	const posts = useSelector(state => selectPostsByCategory(state, path));
+	const dispatch = useDispatch();
+	const { category } = props;
+	const posts = useSelector(state => selectPostsByCategory(state, category));
 	const postsStatus = useSelector(state => state.posts.status);
+	const postsComplete = useSelector(state => state.posts.complete);
+
+	useEffect(() => {
+		if (postsStatus === STATUS.IDLE) {
+			if (category === undefined) {
+				dispatch(fetchPosts());
+			} else {
+				const categoryPath = buildCategoryPath(category);
+				dispatch(fetchCategoryPosts(categoryPath));
+			}
+		} else if (!postsComplete && category === undefined) {
+			dispatch(fetchPosts());
+		}
+	}, [postsStatus, dispatch]);
 
 	var postPreviews = [];
 	if (posts !== undefined) {
