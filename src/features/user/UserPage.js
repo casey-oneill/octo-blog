@@ -4,6 +4,7 @@ import { LocationIcon, MarkGithubIcon } from "@primer/octicons-react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "./userSlice";
 import Loader from "../../components/Loader";
+import { STATUS } from "../../util/constants";
 
 const UserPage = () => {
 	const dispatch = useDispatch();
@@ -11,12 +12,12 @@ const UserPage = () => {
 	const userStatus = useSelector(state => state.user.status);
 
 	useEffect(() => {
-		if (userStatus === 'idle') {
+		if (userStatus === STATUS.IDLE) {
 			dispatch(fetchUser());
 		}
 	}, [userStatus, dispatch]);
 
-	if (['idle', 'loading'].includes(userStatus)) {
+	if ([STATUS.IDLE, STATUS.LOADING].includes(userStatus)) {
 		return (
 			<Container className="about-page my-5">
 				<h1 className="text-center">About</h1>

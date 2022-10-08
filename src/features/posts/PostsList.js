@@ -5,6 +5,7 @@ import Loader from "../../components/Loader";
 import PostPreview from "./PostPreview";
 import { useSelector } from "react-redux";
 import { selectPostsByCategory } from "./postsSlice";
+import { STATUS } from "../../util/constants";
 
 const PostsList = (props) => {
 	const { path } = props;
@@ -22,7 +23,7 @@ const PostsList = (props) => {
 		});
 	}
 
-	if (postsStatus === 'loading') {
+	if (postsStatus === STATUS.LOADING) {
 		return <Loader />
 	}
 

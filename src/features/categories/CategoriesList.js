@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Loader from "../../components/Loader";
-import { useSelector } from "react-redux";
-import { selectAllCategories } from "./categoriesSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategories, selectAllCategories } from "./categoriesSlice";
+import { STATUS } from "../../util/constants";
 
 const CategoriesList = () => {
+	const dispatch = useDispatch();
 	const categories = useSelector(selectAllCategories);
 	const categoriesStatus = useSelector((state) => state.categories.status);
+
+	useEffect(() => {
+		if (categoriesStatus === STATUS.IDLE) {
+			dispatch(fetchCategories());
+		}
+	}, [categoriesStatus, dispatch]);
 
 	var categoryItems = [];
 	categories.forEach((category, i) => {
@@ -18,7 +26,7 @@ const CategoriesList = () => {
 		);
 	});
 
-	if (categoriesStatus === 'loading') {
+	if ([STATUS.IDLE, STATUS.LOADING].includes(categoriesStatus)) {
 		return (
 			<Loader />
 		);

@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { STATUS } from "../../util/constants";
 import { buildOctokit } from "../../util/util";
 
 const initialState = {
 	posts: [],
-	status: 'idle',
+	status: STATUS.IDLE,
 	error: null,
 };
 
@@ -68,7 +69,7 @@ export const postsSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchPosts.pending, (state, action) => {
-				state.status = 'loading';
+				state.status = STATUS.LOADING;
 			})
 			.addCase(fetchPosts.fulfilled, (state, action) => {
 				state.status = 'succeeded';

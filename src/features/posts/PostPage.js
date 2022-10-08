@@ -6,6 +6,7 @@ import Post from "./Post";
 import { useSelector } from "react-redux";
 import { selectPostByName } from "./postsSlice";
 import { buildRelativeCategoryLink, buildRelativePostLink, parseCreatedDate, parseModifiedDate, parsePostTitle } from "../../util/util";
+import { STATUS } from "../../util/constants";
 
 const PostPage = (props) => {
 	const path = props.match.params.path;
@@ -15,7 +16,7 @@ const PostPage = (props) => {
 	const post = useSelector(state => selectPostByName(state, path.concat('.md')));
 	const postsStatus = useSelector(state => state.posts.status);
 
-	if (postsStatus === 'loading') {
+	if (postsStatus === STATUS.LOADING) {
 		return <Loader />
 	}
 
