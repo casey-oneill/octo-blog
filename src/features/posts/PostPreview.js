@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import Loader from '../../components/Loader';
 import { useSelector } from 'react-redux';
 import { selectPostByPath } from './postsSlice';
-import { buildRelativePostLink, parseModifiedDate, parsePostPreview, parsePostTitle } from '../../util/util';
+import { buildRelativePostLink, formatName, parseModifiedDate, parsePostPreview } from '../../util/util';
 import { STATUS } from '../../util/constants';
 
 const Remarkable = require('react-remarkable');
 
 const PostPreview = (props) => {
 	const { path } = props;
-	const title = parsePostTitle(path);
+	const title = formatName(path);
 	const relativeLink = buildRelativePostLink(path);
 
 	const post = useSelector(state => selectPostByPath(state, path));

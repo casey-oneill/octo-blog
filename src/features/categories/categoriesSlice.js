@@ -9,31 +9,13 @@ const initialState = {
 };
 
 export const fetchCategories = createAsyncThunk('categories/fetchCategories', async () => {
-	const parseCategory = (post) => {
-		if (post.download_url === null) {
-			const dirname = post.path.split("/")[1];
-			return {
-				dirname: dirname,
-				name: dirname.split("-").join(" "),
-			}
-		}
-		return null;
-	};
-
 	const octokit = await buildOctokit();
-	const content = await octokit.request('GET /repos/{owner}/{repo}/contents/blog/', {
+	const contents = await octokit.request('GET /repos/{owner}/{repo}/contents/blog/', {
 		owner: process.env.REACT_APP_GH_OWNER,
 		repo: process.env.REACT_APP_GH_REPO,
 	});
 
-	var categories = [];
-	content.data.forEach((post) => {
-		const category = parseCategory(post);
-		if (category !== null && categories.indexOf(category) === -1) {
-			categories.push(category);
-		}
-	});
-
+	const categories = contents.data.filter(content => content.type === 'dir');
 	return categories;
 });
 

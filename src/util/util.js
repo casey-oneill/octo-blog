@@ -11,9 +11,9 @@ export const buildOctokit = async () => {
 	return octokit;
 };
 
-// Given a post path, parse and return the title of the post
-export const parsePostTitle = (path) => {
-	return path.split('/').slice(-1)[0].replace('.md', '').split('-').join(' ');
+// Given an unformatted category or post name, parse and return the name without '-' characters
+export const formatName = (name) => {
+	return name.split('/').slice(-1)[0].replace('.md', '').split('-').join(' ');
 };
 
 // Given post content, parse and return a post preview (this is simply the content without the title and first blankline)
@@ -36,7 +36,7 @@ export const formatDate = (date) => {
 	return format(new Date(date), 'MMMM dd, yyyy');
 }
 
-// Given a category path, parse and return the relative link (to be attached to a <Link />) for that category
+// Given a category name, parse and return the relative link (to be attached to a <Link />) for that category
 export const buildRelativeCategoryLink = (path) => {
 	return (path === null || path === undefined) ? undefined : '/categories/'.concat(path);
 }

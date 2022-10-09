@@ -5,6 +5,7 @@ import Loader from '../../components/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories, selectAllCategories } from './categoriesSlice';
 import { STATUS } from '../../util/constants';
+import { buildRelativeCategoryLink, formatName } from '../../util/util';
 
 const CategoriesList = () => {
 	const dispatch = useDispatch();
@@ -17,11 +18,12 @@ const CategoriesList = () => {
 		}
 	}, [categoriesStatus, dispatch]);
 
-	var categoryItems = [];
-	categories.forEach((category, i) => {
-		categoryItems.push(
-			<ListGroup.Item key={i} action as={Link} to={`/categories/${category.dirname}`}>
-				{category.name}
+	const categoryItems = categories.map((category) => {
+		const relLink = buildRelativeCategoryLink(category.name);
+		const name = formatName(category.name);
+		return (
+			<ListGroup.Item key={category.sha} action as={Link} to={relLink}>
+				{name}
 			</ListGroup.Item>
 		);
 	});
