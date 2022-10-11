@@ -1,42 +1,44 @@
-import React, { useEffect } from 'react';
-import { Col, Row } from 'react-bootstrap';
-import Loader from '../../components/Loader';
-import PostPreview from './PostPreview';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts, selectPostsByCategory } from './postsSlice';
-import { STATUS } from '../../util/constants';
+import React, { useEffect, useState } from "react";
+import { Button, Stack } from "react-bootstrap";
+import Loader from "../../components/Loader";
+import PostPreview from "./PostPreview";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPosts, selectPostsByCategory } from "./postsSlice";
+import { PAGE_SIZE, STATUS } from "../../util/constants";
 
 const PostsList = (props) => {
-	const dispatch = useDispatch();
 	const { category } = props;
+	const [pagination, setPagination] = useState(0);
+
+	const dispatch = useDispatch();
 	const posts = useSelector(state => selectPostsByCategory(state, category));
 	const postsStatus = useSelector(state => state.posts.status);
-		
+
+	useEffect(() => {
+		setPagination(1);
+	}, [category]);
+
 	useEffect(() => {
 		if (postsStatus === STATUS.IDLE) {
-			dispatch(fetchPosts(category));
+			dispatch(fetchPosts());
 		}
 	}, [postsStatus, dispatch]);
 
-	var postPreviews = [];
-	if (posts !== undefined) {
-		posts.forEach((post, i) => {
-			postPreviews.push(
-				<Col xs={12} className={postPreviews.length === 0 ? "mb-3" : "my-3"} key={i}>
-					<PostPreview path={post.path} />
-				</Col>
-			);
-		});
+	if (postsStatus === STATUS.LOADING) {
+		return <Loader />;
 	}
 
-	if (postsStatus === STATUS.LOADING) {
-		return <Loader />
-	}
+	const previewsList = posts.slice(0, pagination * PAGE_SIZE).map(post => {
+		return post.content === undefined ? null : <PostPreview key={post.sha} path={post.path} />;
+	});
 
 	return (
-		<Row className="posts">
-			{postPreviews}
-		</Row>
+		<Stack gap={5} className="posts">
+			{previewsList}
+			{pagination * PAGE_SIZE < posts.length &&
+				<Button variant="primary" onClick={() => setPagination(pagination + 1)}>See More</Button>
+			}
+		</Stack>
 	);
 };
 

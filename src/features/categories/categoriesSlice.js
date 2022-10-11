@@ -10,9 +10,10 @@ const initialState = {
 
 export const fetchCategories = createAsyncThunk('categories/fetchCategories', async () => {
 	const octokit = await buildOctokit();
-	const contents = await octokit.request('GET /repos/{owner}/{repo}/contents/blog/', {
+	const contents = await octokit.rest.repos.getContent({
 		owner: process.env.REACT_APP_GH_OWNER,
 		repo: process.env.REACT_APP_GH_REPO,
+		path: 'blog',
 	});
 
 	const categories = contents.data.filter(content => content.type === 'dir');
