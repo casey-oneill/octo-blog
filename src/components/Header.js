@@ -6,6 +6,7 @@ import Loader from './Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories, selectAllCategories } from '../features/categories/categoriesSlice';
 import { STATUS } from '../util/constants';
+import { buildRelativeCategoryLink, formatName } from '../util/util';
 
 const Header = () => {
 	const dispatch = useDispatch();
@@ -20,7 +21,9 @@ const Header = () => {
 
 	var categoryItems = [];
 	categories.forEach((category, i) => {
-		categoryItems.push(<NavDropdown.Item key={i} as={Link} to={`/categories/${category.dirname}`} className="text-capitalize">{category.name}</NavDropdown.Item>)
+		const relLink = buildRelativeCategoryLink(category.name);
+		const name = formatName(category.name)
+		categoryItems.push(<NavDropdown.Item key={i} as={Link} to={relLink} className="text-capitalize">{name}</NavDropdown.Item>)
 	});
 
 	if ([STATUS.IDLE, STATUS.LOADING].includes(categoriesStatus)) {
