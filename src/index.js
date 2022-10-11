@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import store from './app/store';
 import PostPage from './features/posts/PostPage';
 import UserPage from './features/user/UserPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 const CategoryPageWrapper = (props) => {
 	const params = useParams();
@@ -46,6 +47,7 @@ root.render(
 						</Route>
 					</Route>
 					<Route path="about" element={<UserPage />} />
+					<Route path="*" element={<NotFoundPage />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
