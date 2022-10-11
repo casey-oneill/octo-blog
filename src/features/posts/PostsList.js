@@ -4,7 +4,7 @@ import Loader from "../../components/Loader";
 import PostPreview from "./PostPreview";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts, selectPostsByCategory } from "./postsSlice";
-import { PAGE_SIZE, STATUS } from "../../util/constants";
+import { PAGE_SIZE, Status } from "../../util/constants";
 
 const PostsList = (props) => {
 	const { category } = props;
@@ -19,12 +19,12 @@ const PostsList = (props) => {
 	}, [category]);
 
 	useEffect(() => {
-		if (postsStatus === STATUS.IDLE) {
+		if (postsStatus === Status.Idle) {
 			dispatch(fetchPosts());
 		}
 	}, [postsStatus, dispatch]);
 
-	if (postsStatus === STATUS.LOADING) {
+	if (postsStatus === Status.Loading) {
 		return <Loader />;
 	}
 

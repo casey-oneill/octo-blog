@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { STATUS } from '../../util/constants';
+import { Status } from '../../util/constants';
 import { buildOctokit } from '../../util/util';
 
 const initialState = {
 	categories: [],
-	status: STATUS.IDLE,
+	status: Status.Idle,
 	error: null,
 };
 
@@ -27,14 +27,14 @@ export const categoriesSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchCategories.pending, (state, action) => {
-				state.status = STATUS.LOADING;
+				state.status = Status.Loading;
 			})
 			.addCase(fetchCategories.fulfilled, (state, action) => {
-				state.status = STATUS.SUCCEEDED;
+				state.status = Status.Succeeded;
 				state.categories = action.payload;
 			})
 			.addCase(fetchCategories.rejected, (state, action) => {
-				state.status = STATUS.FAILED;
+				state.status = Status.Failed;
 				state.error = action.error.message;
 			});
 	}

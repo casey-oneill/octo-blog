@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { STATUS } from '../../util/constants';
+import { Status } from '../../util/constants';
 import { buildCategoryPath, buildOctokit } from '../../util/util';
 
 const initialState = {
 	posts: [],
-	status: STATUS.IDLE,
+	status: Status.Idle,
 	error: null,
 };
 
@@ -112,27 +112,27 @@ export const postsSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchPosts.pending, (state, action) => {
-				state.status = STATUS.LOADING;
+				state.status = Status.Loadign;
 			})
 			.addCase(fetchPosts.fulfilled, (state, action) => {
-				state.status = STATUS.SUCCEEDED;
+				state.status = Status.Succeeded;
 				state.posts = action.payload;
 			})
 			.addCase(fetchPosts.rejected, (state, action) => {
-				state.status = STATUS.FAILED;
+				state.status = Status.Failed;
 				state.error = action.error.message;
 			})
 			.addCase(fetchPost.pending, (state, action) => {
-				state.status = STATUS.LOADING;
+				state.status = Status.Loading;
 			})
 			.addCase(fetchPost.fulfilled, (state, action) => {
-				state.status = STATUS.SUCCEEDED;
+				state.status = Status.Succeeded;
 				if (state.posts.find(post => post.name === action.payload.name) === undefined) {
 					state.posts = state.posts.concat(action.payload);
 				}
 			})
 			.addCase(fetchPost.rejected, (state, action) => {
-				state.status = STATUS.FAILED;
+				state.status = Status.Failed;
 				state.error = action.error.message;
 			})
 	}

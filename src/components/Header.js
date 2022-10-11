@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Loader from './Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories, selectAllCategories } from '../features/categories/categoriesSlice';
-import { STATUS } from '../util/constants';
+import { Status } from '../util/constants';
 import { buildRelativeCategoryLink, formatName } from '../util/util';
 
 const Header = () => {
@@ -14,7 +14,7 @@ const Header = () => {
 	const categoriesStatus = useSelector((state) => state.categories.status);
 
 	useEffect(() => {
-		if (categoriesStatus === STATUS.IDLE) {
+		if (categoriesStatus === Status.Idle) {
 			dispatch(fetchCategories());
 		}
 	}, [categoriesStatus, dispatch]);
@@ -26,7 +26,7 @@ const Header = () => {
 		categoryItems.push(<NavDropdown.Item key={i} as={Link} to={relLink} className="text-capitalize">{name}</NavDropdown.Item>)
 	});
 
-	if ([STATUS.IDLE, STATUS.LOADING].includes(categoriesStatus)) {
+	if ([Status.Idle, Status.Loading].includes(categoriesStatus)) {
 		return <Loader />
 	}
 

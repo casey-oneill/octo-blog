@@ -5,7 +5,7 @@ import Loader from '../../components/Loader';
 import { useSelector } from 'react-redux';
 import { selectPostByPath } from './postsSlice';
 import { buildRelativePostLink, formatName, parseModifiedDate, parsePostPreview } from '../../util/util';
-import { STATUS } from '../../util/constants';
+import { Status } from '../../util/constants';
 
 const Remarkable = require('react-remarkable');
 
@@ -20,7 +20,7 @@ const PostPreview = (props) => {
 	const preview = parsePostPreview(post.content);
 	const updatedDate = parseModifiedDate(post.commits);
 
-	if (postsStatus === STATUS.LOADING) {
+	if (postsStatus === Status.Loading) {
 		return <Loader />;
 	}
 

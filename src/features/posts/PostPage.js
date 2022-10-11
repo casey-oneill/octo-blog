@@ -6,7 +6,7 @@ import Post from './Post';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPost, selectPostByName } from './postsSlice';
 import { buildPostPath, buildRelativeCategoryLink, buildRelativePostLink, formatName, parseCreatedDate, parseModifiedDate } from '../../util/util';
-import { STATUS } from '../../util/constants';
+import { Status } from '../../util/constants';
 
 const PostPage = (props) => {
 	const dispatch = useDispatch();
@@ -19,12 +19,12 @@ const PostPage = (props) => {
 	const postPath = buildPostPath(props.match.params.category, path);
 
 	useEffect(() => {
-		if (postsStatus === STATUS.IDLE) {
+		if (postsStatus === Status.Idle) {
 			dispatch(fetchPost(postPath));
 		}
 	}, [postsStatus, postPath, dispatch]);
 
-	if ([STATUS.IDLE, STATUS.LOADING].includes(postsStatus)) {
+	if ([Status.Idle, Status.Loading].includes(postsStatus)) {
 		return <Loader />
 	}
 
