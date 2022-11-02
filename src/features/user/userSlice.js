@@ -10,7 +10,7 @@ const initialState = {
 
 export const fetchUser = createAsyncThunk('/user/fetchUser', async () => {
 	const octokit = await buildOctokit();
-	const user = await octokit.request('GET /user', {});
+	const user = await octokit.request('GET /asdf', {});
 
 	return user.data;
 });
