@@ -14,24 +14,22 @@ const Layout = () => {
 	const userStatus = useSelector(state => state.user.status);
 	const userError = useSelector(state => state.user.error);
 
-	console.log(userError)
+	console.log(userStatus)
 
-	if (postsStatus === Status.Error) {
-		<div className="d-flex flex-column min-vh-100">
-			<ErrorPage error={postsError} />
-		</div>
+	if (postsStatus === Status.Failed) {
+		return (
+			<div className="d-flex flex-column min-vh-100">
+				<ErrorPage error={postsError} />
+			</div>
+		);
 	}
 
-	if (categoriesStatus === Status.Error) {
-		<div className="d-flex flex-column min-vh-100">
-			<ErrorPage error={categoriesError} />
-		</div>
-	}
-
-	if (userStatus === Status.Error) {
-		<div className="d-flex flex-column min-vh-100">
-			<ErrorPage error={userError} />
-		</div>
+	if (categoriesStatus === Status.Failed) {
+		return (
+			<div className="d-flex flex-column min-vh-100">
+				<ErrorPage error={categoriesError} />
+			</div>
+		);
 	}
 
 	return (

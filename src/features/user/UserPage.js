@@ -5,11 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from './userSlice';
 import Loader from '../../components/Loader';
 import { Status } from '../../util/constants';
+import ErrorPage from '../../pages/ErrorPage';
 
 const UserPage = () => {
 	const dispatch = useDispatch();
 	const user = useSelector(state => state.user.user);
 	const userStatus = useSelector(state => state.user.status);
+	const userError = useSelector(state => state.user.error);
 
 	useEffect(() => {
 		if (userStatus === Status.Idle) {
@@ -23,6 +25,14 @@ const UserPage = () => {
 				<h1 className="text-center">About</h1>
 				<Loader />
 			</Container>
+		);
+	}
+
+	if (userStatus === Status.Failed) {
+		return (
+			<div className="d-flex flex-column min-vh-100">
+				<ErrorPage error={userError} />
+			</div>
 		);
 	}
 
