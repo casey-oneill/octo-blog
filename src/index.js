@@ -12,6 +12,7 @@ import store from './app/store';
 import PostPage from './features/posts/PostPage';
 import UserPage from './features/user/UserPage';
 import NotFoundPage from './pages/NotFoundPage';
+import ErrorPage from './pages/ErrorPage';
 
 const CategoryPageWrapper = (props) => {
 	const params = useParams();
@@ -47,6 +48,7 @@ root.render(
 						</Route>
 					</Route>
 					<Route path="about" element={<UserPage />} />
+					<Route path="error" element={<ErrorPage />} />
 					<Route path="*" element={<NotFoundPage />} />
 				</Route>
 			</Routes>

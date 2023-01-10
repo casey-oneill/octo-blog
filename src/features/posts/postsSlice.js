@@ -58,6 +58,8 @@ const fetchCategoryPosts = async (category) => {
 		path: path,
 	});
 
+	console.log(contents)
+
 	const posts = await Promise.all(contents.data.map(async post => {
 		const path = post.path;
 		const commits = await fetchPostCommits(path);

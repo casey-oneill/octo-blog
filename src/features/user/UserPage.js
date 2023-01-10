@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from './userSlice';
 import Loader from '../../components/Loader';
 import { Status } from '../../util/constants';
-import ErrorPage from '../../pages/ErrorPage';
+import { Navigate } from 'react-router-dom';
 
 const UserPage = () => {
 	const dispatch = useDispatch();
@@ -30,9 +30,7 @@ const UserPage = () => {
 
 	if (userStatus === Status.Failed) {
 		return (
-			<div className="d-flex flex-column min-vh-100">
-				<ErrorPage error={userError} />
-			</div>
+			<Navigate replace to="/error" />
 		);
 	}
 

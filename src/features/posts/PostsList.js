@@ -5,6 +5,7 @@ import PostPreview from "./PostPreview";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts, selectPostsByCategory } from "./postsSlice";
 import { PAGE_SIZE, Status } from "../../util/constants";
+import { Navigate } from "react-router-dom";
 
 const PostsList = (props) => {
 	const { category } = props;
@@ -20,12 +21,18 @@ const PostsList = (props) => {
 
 	useEffect(() => {
 		if (postsStatus === Status.Idle) {
-			dispatch(fetchPosts());
+			dispatch(fetchPosts(category));
 		}
 	}, [postsStatus, dispatch]);
 
 	if (postsStatus === Status.Loading) {
 		return <Loader />;
+	}
+
+	if (postsStatus === Status.Failed) {
+		return (
+			<Navigate replace to="/error" />
+		);
 	}
 
 	const previewsList = posts.slice(0, pagination * PAGE_SIZE).map(post => {
