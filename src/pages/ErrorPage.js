@@ -3,7 +3,6 @@ import { Alert, Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const ErrorPage = () => {
-
 	return (
 		<Container className="not-found py-5 text-center">
 			<h1 className="mb-5">Oops! Something went wrong.</h1>

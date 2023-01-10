@@ -11,7 +11,6 @@ const UserPage = () => {
 	const dispatch = useDispatch();
 	const user = useSelector(state => state.user.user);
 	const userStatus = useSelector(state => state.user.status);
-	const userError = useSelector(state => state.user.error);
 
 	useEffect(() => {
 		if (userStatus === Status.Idle) {

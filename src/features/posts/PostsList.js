@@ -5,7 +5,8 @@ import PostPreview from "./PostPreview";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts, selectPostsByCategory } from "./postsSlice";
 import { PAGE_SIZE, Status } from "../../util/constants";
-import { Navigate } from "react-router-dom";
+import { withErrorBoundary } from "react-error-boundary";
+import PostsListFallback from "./PostsListFallback";
 
 const PostsList = (props) => {
 	const { category } = props;
@@ -30,9 +31,7 @@ const PostsList = (props) => {
 	}
 
 	if (postsStatus === Status.Failed) {
-		return (
-			<Navigate replace to="/error" />
-		);
+		throw new Error("Failed to load blog posts.");
 	}
 
 	const previewsList = posts.slice(0, pagination * PAGE_SIZE).map(post => {
@@ -42,11 +41,9 @@ const PostsList = (props) => {
 	return (
 		<Stack gap={5} className="posts">
 			{previewsList}
-			{pagination * PAGE_SIZE < posts.length &&
-				<Button variant="primary" onClick={() => setPagination(pagination + 1)}>See More</Button>
-			}
+			{pagination * PAGE_SIZE < posts.length && <Button variant="primary" onClick={() => setPagination(pagination + 1)}>See More</Button>}
 		</Stack>
 	);
 };
 
-export default PostsList;
+export default withErrorBoundary(PostsList, { FallbackComponent: PostsListFallback });
