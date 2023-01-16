@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import 'bootswatch/dist/litera/bootstrap.min.css'; // TODO: Get theme from .env file
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import { BrowserRouter, Route, Routes, useParams } from 'react-router-dom';
 import Layout from './pages/Layout';
@@ -12,6 +10,12 @@ import store from './app/store';
 import PostPage from './features/posts/PostPage';
 import UserPage from './features/user/UserPage';
 import NotFoundPage from './pages/NotFoundPage';
+
+if (process.env.REACT_APP_THEME) {
+	import(`bootswatch/dist/${process.env.REACT_APP_THEME}/bootstrap.min.css`);
+} else {
+	import('bootstrap/dist/css/bootstrap.min.css');
+}
 
 const CategoryPageWrapper = (props) => {
 	const params = useParams();
