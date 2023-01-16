@@ -31,7 +31,7 @@ const PostsList = (props) => {
 	}
 
 	if (postsStatus === Status.Failed) {
-		throw new Error("Failed to load blog posts.");
+		throw new Error("Failed to fetch blog posts.");
 	}
 
 	const previewsList = posts.slice(0, pagination * PAGE_SIZE).map(post => {

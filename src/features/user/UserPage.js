@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from './userSlice';
 import Loader from '../../components/Loader';
 import { Status } from '../../util/constants';
-import { Navigate } from 'react-router-dom';
 
 const UserPage = () => {
 	const dispatch = useDispatch();
@@ -28,9 +27,7 @@ const UserPage = () => {
 	}
 
 	if (userStatus === Status.Failed) {
-		return (
-			<Navigate replace to="/error" />
-		);
+		throw new Error("Failed to fetch user information.");
 	}
 
 	return (

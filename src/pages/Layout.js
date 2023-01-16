@@ -1,7 +1,9 @@
 import React from 'react';
+import { withErrorBoundary } from 'react-error-boundary';
 import { Outlet } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import PageFallback from './PageFallback';
 
 const Layout = () => {
 
@@ -14,4 +16,4 @@ const Layout = () => {
 	);
 };
 
-export default Layout;
+export default withErrorBoundary(Layout, { FallbackComponent: PageFallback });

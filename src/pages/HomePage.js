@@ -12,7 +12,7 @@ const HomePage = () => {
 					<CategoriesList />
 				</Col>
 				<Col xs={12} lg={9}>
-					<PostsList />
+					<PostsList category="" />
 				</Col>
 			</Row>
 		</Container>
